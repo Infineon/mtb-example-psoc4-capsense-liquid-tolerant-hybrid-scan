@@ -46,7 +46,7 @@ TARGET=CY8CKIT-041S-MAX
 #
 # If APPNAME is edited, ensure to update or regenerate launch
 # configurations for your IDE.
-APPNAME=mtb-example-psoc4-msc-capsense-liquid-tolerant-hybrid-scan
+APPNAME=mtb-example-psoc4-capsense-liquid-tolerant-hybrid-scan
 
 # Name of toolchain to use. Options include:
 #

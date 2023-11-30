@@ -1,19 +1,19 @@
-# PSoC&trade; 4: MSC CAPSENSE&trade; liquid-tolerant hybrid scan
+# PSoC&trade; 4: CAPSENSE&trade; liquid-tolerant hybrid scan
 
 This code example demonstrates the self-capacitance scanning technique to implement liquid tolerance on mutual-cap sensors.
 
 CAPSENSE&trade; senses the self-capacitance of Tx and Rx nodes of a mutual-capacitance sensor. This ability of scanning the sensor using both self-capacitance (CSD) and mutual-capacitance (CSX) sensing modes is used to avoid false triggers due to the presence of liquid drops on a mutual-capacitance sensor.
 
-[View this README on GitHub.](https://github.com/Infineon/mtb-example-psoc4-msc-capsense-liquid-tolerant-hybrid-scan)
+[View this README on GitHub.](https://github.com/Infineon/mtb-example-psoc4-capsense-liquid-tolerant-hybrid-scan)
 
-[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMzc2NzUiLCJTcGVjIE51bWJlciI6IjAwMi0zNzY3NSIsIkRvYyBUaXRsZSI6IlBTb0MmdHJhZGU7IDQ6IE1TQyBDQVBTRU5TRSZ0cmFkZTsgbGlxdWlkLXRvbGVyYW50IGh5YnJpZCBzY2FuIiwicmlkIjoicmFqYW5uYWdhdXRhIiwiRG9jIHZlcnNpb24iOiIxLjAuMCIsIkRvYyBMYW5ndWFnZSI6IkVuZ2xpc2giLCJEb2MgRGl2aXNpb24iOiJNQ0QiLCJEb2MgQlUiOiJJQ1ciLCJEb2MgRmFtaWx5IjoiUFNPQyJ9)
+[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMzc2NzUiLCJTcGVjIE51bWJlciI6IjAwMi0zNzY3NSIsIkRvYyBUaXRsZSI6IlBTb0MmdHJhZGU7IDQ6IENBUFNFTlNFJnRyYWRlOyBsaXF1aWQtdG9sZXJhbnQgaHlicmlkIHNjYW4iLCJyaWQiOiJyYWphbm5hZ2F1dGEiLCJEb2MgdmVyc2lvbiI6IjEuMS4wIiwiRG9jIExhbmd1YWdlIjoiRW5nbGlzaCIsIkRvYyBEaXZpc2lvbiI6Ik1DRCIsIkRvYyBCVSI6IklDVyIsIkRvYyBGYW1pbHkiOiJQU09DIn0=)
 
 ## Requirements
 
 - [ModusToolbox&trade;](https://www.infineon.com/modustoolbox) v3.1 or later (tested with v3.1)
 - Board support package (BSP) minimum required version: 3.1.0
 - Programming language: C
-- Associated parts: [PSoC&trade; 4100S Max](https://www.infineon.com/cms/en/product/evaluation-boards/cy8ckit-041s-max/)
+- Associated parts: [PSoC&trade; 4000S, PSoC&trade; 4100S Plus, PSoC&trade; 4100S Max, PSoC&trade; 4000T, and PSoC&trade; 4500S](https://www.infineon.com/cms/en/product/microcontroller/32-bit-psoc-arm-cortex-microcontroller/psoc-4-32-bit-arm-cortex-m0-mcu/) 
 
 ## Supported toolchains (make variable 'TOOLCHAIN')
 
@@ -24,12 +24,16 @@ CAPSENSE&trade; senses the self-capacitance of Tx and Rx nodes of a mutual-capac
 ## Supported kits (make variable 'TARGET')
 
 - [PSoC&trade; 4100S Max Pioneer kit](https://www.infineon.com/CY8CKIT-041S-MAX) (`CY8CKIT-041S-MAX`) – Default value of `TARGET`
+- [PSoC&trade; 4100S Plus Prototyping Kit](https://www.infineon.com/CY8CKIT-149) (`CY8CKIT-149`)
+- [PSoC&trade; 4000S CAPSENSE&trade; Prototyping Kit](https://www.infineon.com/CY8CKIT-145-40XX) (`CY8CKIT-145-40XX`)
+- [PSoC&trade; 4000T CAPSENSE&trade; Prototyping Kit](https://www.infineon.com/CY8CPROTO-040T) (`CY8CPROTO-040T`)
+- [PSoC&trade; 4500S Pioneer Kit](https://www.infineon.com/CY8CKIT-045S) (`CY8CKIT-045S`)
 
 ## Hardware setup
 
-This example uses the board's default configuration. See the [kit user guide](https://www.infineon.com/dgdl/Infineon-CY8CKIT-041S-MAX_PSoC_4100S_Max_Pioneer_Kit_Guide-UserManual-v01_00-EN.pdf?fileId=8ac78c8c7d710014017d71538d1f209d) to ensure that the board is configured correctly.
+This example uses the board's default configuration. See the kit guide to ensure that the board is configured correctly.
 
-**Note:** The PSoC&trade; 4 kits ship with KitProg2 installed. The ModusToolbox&trade; requires KitProg3. Before using this code example, make sure that the board is upgraded to KitProg3. The tool and instructions are available in the [Firmware Loader](https://github.com/Infineon/Firmware-loader) GitHub repository. If you do not upgrade, you will see an error like "unable to find CMSIS-DAP device" or "KitProg firmware is out of date".
+> **Note:** Some of the PSoC&trade; 4 kits ship with KitProg2 installed. The ModusToolbox&trade; requires KitProg3. Before using this code example, make sure that the board is upgraded to KitProg3. The tool and instructions are available in the [Firmware Loader](https://github.com/Infineon/Firmware-loader) GitHub repository. If you do not upgrade, you will see an error like "unable to find CMSIS-DAP device" or "KitProg firmware is out of date".
 
 ## Software setup
 
@@ -37,105 +41,106 @@ This example requires no additional software or tools.
 
 ## Using the code example
 
-Create the project and open it using one of the following:
+### Create the project
 
-<details><summary><b>In Eclipse IDE for ModusToolbox&trade;</b></summary>
+The ModusToolbox&trade; tools package provides the Project Creator as both a GUI tool and a command line tool.
 
-1. Click the **New Application** link in the **Quick Panel** (or, use **File** > **New** > **ModusToolbox&trade; Application**). This launches the [Project Creator](https://www.infineon.com/ModusToolboxProjectCreator) tool.
+<details><summary><b>Use Project Creator GUI</b></summary>
 
-2. Pick a kit supported by the code example from the list shown in the **Project Creator - Choose Board Support Package (BSP)** dialog.
+1. Open the Project Creator GUI tool.
 
-   When you select a supported kit, the example is reconfigured automatically to work with the kit. To work with a different supported kit later, use the [Library Manager](https://www.infineon.com/ModusToolboxLibraryManager) to choose the BSP for the supported kit. You can use the Library Manager to select or update the BSP and firmware libraries used in this application. To access the Library Manager, click the link from the **Quick Panel**.
+   There are several ways to do this, including launching it from the dashboard or from inside the Eclipse IDE. For more details, see the [Project Creator user guide](https://www.infineon.com/ModusToolboxProjectCreator) (locally available at *{ModusToolbox&trade; install directory}/tools_{version}/project-creator/docs/project-creator.pdf*).
 
-   You can also just start the application creation process again and select a different kit.
+2. On the **Choose Board Support Package (BSP)** page, select a kit supported by this code example. See [Supported kits](#supported-kits-make-variable-target).
+   > **Note:** To use this code example for a kit not listed here, you may need to update the source files. If the kit does not have the required resources, the application may not work.
 
-   If you want to use the application for a kit not listed here, you may need to update the source files. If the kit does not have the required resources, the application may not work.
+3. On the **Select Application** page:
 
-3. In the **Project Creator - Select Application** dialog, choose the example by enabling the checkbox.
+   a. Select the **Applications(s) Root Path** and the **Target IDE**.
 
-4. (Optional) Change the suggested **New Application Name**.
+   > **Note:** Depending on how you open the Project Creator tool, these fields may be pre-selected for you.
 
-5. The **Application(s) Root Path** defaults to the Eclipse workspace which is usually the desired location for the application. If you want to store the application in a different location, you can change the *Application(s) Root Path* value. Applications that share libraries should be in the same root path.
+   b.	Select this code example from the list by enabling its check box.
 
-6. Click **Create** to complete the application creation process.
+   > **Note:** You can narrow the list of displayed examples by typing in the filter box.
+
+   c. (Optional) Change the suggested **New Application Name** and **New BSP Name**.
+
+   d. Click **Create** to complete the application creation process.
+
+</details>
+
+<details><summary><b>Use Project Creator CLI</b></summary>
+
+The 'project-creator-cli' tool can be used to create applications from a CLI terminal or from within batch files or shell scripts. This tool is available in the *{ModusToolbox&trade; install directory}/tools_{version}/project-creator/* directory.
+
+Use a CLI terminal to invoke the 'project-creator-cli' tool. On Windows, use the command-line 'modus-shell' program provided in the ModusToolbox&trade; installation instead of a standard Windows command-line application. This shell provides access to all ModusToolbox&trade; tools. You can access it by typing "modus-shell" in the search box in the Windows menu. In Linux and macOS, you can use any terminal application.
+
+The following example clones the "[mtb-example-psoc4-capsense-liquid-tolerant-hybrid-scan](https://github.com/Infineon/mtb-example-psoc4-capsense-liquid-tolerant-hybrid-scan)" application with the desired name "Capsenseliquidtoleranthybridscan" configured for the *CY8CKIT-041S-MAX* BSP into the specified working directory, *C:/mtb_projects*:
+
+   ```
+   project-creator-cli --board-id CY8CKIT-041S-MAX --app-id mtb-example-psoc4-capsense-liquid-tolerant-hybrid-scan --user-app-name Capsenseliquidtoleranthybridscan --target-dir "C:/mtb_projects"
+   ```
+
+The 'project-creator-cli' tool has the following arguments:
+
+Argument | Description | Required/optional
+---------|-------------|-----------
+`--board-id` | Defined in the <id> field of the [BSP](https://github.com/Infineon?q=bsp-manifest&type=&language=&sort=) manifest | Required
+`--app-id`   | Defined in the <id> field of the [CE](https://github.com/Infineon?q=ce-manifest&type=&language=&sort=) manifest | Required
+`--target-dir`| Specify the directory in which the application is to be created if you prefer not to use the default current working directory | Optional
+`--user-app-name`| Specify the name of the application if you prefer to have a name other than the example's default name | Optional
+
+> **Note:** The project-creator-cli tool uses the `git clone` and `make getlibs` commands to fetch the repository and import the required libraries. For details, see the "Project creator tools" section of the [ModusToolbox&trade; tools package user guide](https://www.infineon.com/ModusToolboxUserGuide) (locally available at {ModusToolbox&trade; install directory}/docs_{version}/mtb_user_guide.pdf).
+
+
+</details>
+
+### Open the project
+
+After the project has been created, you can open it in your preferred development environment.
+
+<details><summary><b>Eclipse IDE</b></summary>
+
+
+If you opened the Project Creator tool from the included Eclipse IDE, the project will open in Eclipse automatically.
 
 For more details, see the [Eclipse IDE for ModusToolbox&trade; user guide](https://www.infineon.com/MTBEclipseIDEUserGuide) (locally available at *{ModusToolbox&trade; install directory}/docs_{version}/mt_ide_user_guide.pdf*).
 
 </details>
 
-<details><summary><b>In command-line interface (CLI)</b></summary>
 
-ModusToolbox&trade; provides the Project Creator as both a GUI tool and the command line tool, "project-creator-cli". The CLI tool can be used to create applications from a CLI terminal or from within batch files or shell scripts. This tool is available in the *{ModusToolbox&trade; install directory}/tools_{version}/project-creator/* directory.
+<details><summary><b>Visual Studio (VS) Code</b></summary>
 
-Use a CLI terminal to invoke the "project-creator-cli" tool. On Windows, use the command line "modus-shell" program provided in the ModusToolbox&trade; installation instead of a standard Windows command-line application. This shell provides access to all ModusToolbox&trade; tools. You can access it by typing `modus-shell` in the search box in the Windows menu. In Linux and macOS, you can use any terminal application.
+Launch VS Code manually, and then open the generated *{project-name}.code-workspace* file located in the project directory.
 
-The "project-creator-cli" tool has the following arguments:
-
-Argument | Description | Required/optional
----------|-------------|-----------
-`--board-id` | Defined in the `<id>` field of the [BSP](https://github.com/Infineon?q=bsp-manifest&type=&language=&sort=) manifest | Required
-`--app-id`   | Defined in the `<id>` field of the [CE](https://github.com/Infineon?q=ce-manifest&type=&language=&sort=) manifest | Required
-`--target-dir`| Specify the directory in which the application is to be created if you prefer not to use the default current working directory | Optional
-`--user-app-name`| Specify the name of the application if you prefer to have a name other than the example's default name | Optional
-
-<br>
-
-The following example clones the "[MSCcapsenseliquidtoleranthybridscan](https://github.com/Infineon/mtb-example-psoc4-msc-capsense-liquid-tolerant-hybrid-scan)" application with the desired name "MSCcapsenseliquidtoleranthybridscan" configured for the [CY8CKIT-041S-MAX](https://www.infineon.com/CY8CKIT-041S-MAX) BSP into the specified working directory, *C:/mtb_projects*:
-
-   ```
-   project-creator-cli --board-id CY8CKIT-041S-MAX --app-id mtb-example-psoc4-msc-capsense-liquid-tolerant-hybrid-scan --user-app-name MSCcapsenseliquidtoleranthybridscan --target-dir "C:/mtb_projects"
-   ```
-
-**Note:** The project-creator-cli tool uses the `git clone` and `make getlibs` commands to fetch the repository and import the required libraries. For details, see the "Project creator tools" section of the [ModusToolbox&trade; user guide](https://www.infineon.com/ModusToolboxUserGuide) (locally available at *{ModusToolbox&trade; install directory}/docs_{version}/mtb_user_guide.pdf*).
-
-To work with a different supported kit later, use the [Library Manager](https://www.infineon.com/ModusToolboxLibraryManager) to choose the BSP for the supported kit. You can invoke the Library Manager GUI tool from the terminal using `make library-manager` command or use the Library Manager CLI tool "library-manager-cli" to change the BSP.
-
-The "library-manager-cli" tool has the following arguments:
-
-Argument | Description | Required/optional
----------|-------------|-----------
-`--add-bsp-name` | Name of the BSP that should be added to the application | Required
-`--set-active-bsp` | Name of the BSP that should be as active BSP for the application | Required
-`--add-bsp-version`| Specify the version of the BSP that should be added to the application if you do not wish to use the latest from manifest | Optional
-`--add-bsp-location`| Specify the location of the BSP (local/shared) if you prefer to add the BSP in a shared path | Optional
-
-<br>
-
-The following example adds the [CY8CKIT-041S-MAX](https://www.infineon.com/CY8CKIT-041S-MAX) BSP to the already created application and makes it the active BSP for the app:
-
-   ```
-   library-manager-cli --project "C:/mtb_projects/MSCcapsenseliquidtoleranthybridscan" --add-bsp-name CY8CKIT-041S-MAX --add-bsp-version "latest-v3.X" --add-bsp-location "local"
-
-   library-manager-cli --project "C:/mtb_projects/MSCcapsenseliquidtoleranthybridscan" --set-active-bsp APP_CY8CKIT-041S-MAX
-   ```
+For more details, see the [Visual Studio Code for ModusToolbox&trade; user guide](https://www.infineon.com/MTBVSCodeUserGuide) (locally available at *{ModusToolbox&trade; install directory}/docs_{version}/mt_vscode_user_guide.pdf*).
 
 </details>
 
-<details><summary><b>In third-party IDEs</b></summary>
 
-Use one of the following options:
+<details><summary><b>Keil µVision</b></summary>
 
-- **Use the standalone [Project Creator](https://www.infineon.com/ModusToolboxProjectCreator) tool:**
+Double-click the generated *{project-name}.cprj* file to launch the Keil µVision IDE.
 
-   1. Launch Project Creator from the Windows Start menu or from *{ModusToolbox&trade; install directory}/tools_{version}/project-creator/project-creator.exe*.
+For more details, see the [Keil µVision for ModusToolbox&trade; user guide](https://www.infineon.com/MTBuVisionUserGuide) (locally available at *{ModusToolbox&trade; install directory}/docs_{version}/mt_uvision_user_guide.pdf*).
 
-   2. In the initial **Choose Board Support Package** screen, select the BSP, and click **Next**.
+</details>
 
-   3. In the **Select Application** screen, select the appropriate IDE from the **Target IDE** drop-down menu.
+<details><summary><b>IAR Embedded Workbench</b></summary>
 
-   4. Click **Create** and follow the instructions printed in the bottom pane to import or open the exported project in the respective IDE.
+Open IAR Embedded Workbench manually, and create a new project. Then select the generated *{project-name}.ipcf* file located in the project directory.
 
-<br>
+For more details, see the [IAR Embedded Workbench for ModusToolbox&trade; user guide](https://www.infineon.com/MTBIARUserGuide) (locally available at *{ModusToolbox&trade; install directory}/docs_{version}/mt_iar_user_guide.pdf*).
 
-- **Use command-line interface (CLI):**
+</details>
 
-   1. Follow the instructions from the **In command-line interface (CLI)** section to create the application.
+<details><summary><b>Command line</b></summary>
 
-   2. Export the application to a supported IDE using the `make <ide>` command.
 
-   3. Follow the instructions displayed in the terminal to create or import the application as an IDE project.
+If you prefer to use the CLI, open the appropriate terminal, and navigate to the project directory. On Windows, use the command-line 'modus-shell' program; on Linux and macOS, you can use any terminal application. From there, you can run various `make` commands.
 
-For a list of supported IDEs and more details, see the "Exporting to IDEs" section of the [ModusToolbox&trade; user guide](https://www.infineon.com/ModusToolboxUserGuide) (locally available at *{ModusToolbox&trade; install directory}/docs_{version}/mtb_user_guide.pdf*).
+For more details, see the [ModusToolbox&trade; tools package user guide](https://www.infineon.com/ModusToolboxUserGuide) (locally available at *{ModusToolbox&trade; install directory}/docs_{version}/mtb_user_guide.pdf*).
 
 </details>
 
@@ -145,7 +150,7 @@ For a list of supported IDEs and more details, see the "Exporting to IDEs" secti
 
 2. Program the board using one of the following:
 
-   <details><summary><b>Using Eclipse IDE for ModusToolbox&trade;</b></summary>
+   <details><summary><b>Using Eclipse IDE</b></summary>
 
       1. Select the application project in the Project Explorer.
 
@@ -153,23 +158,26 @@ For a list of supported IDEs and more details, see the "Exporting to IDEs" secti
 
    </details>
 
+   <details><summary><b>In other IDEs</b></summary>
+
+   Follow the instructions in your preferred IDE.
+   </details>
+
+
    <details><summary><b>Using CLI</b></summary>
 
      From the terminal, execute the `make program` command to build and program the application using the default toolchain to the default target. The default toolchain is specified in the application's Makefile but you can override this value manually:
       ```
-      make program TARGET=<BSP> TOOLCHAIN=<toolchain>
+      make program TOOLCHAIN=<toolchain>
       ```
 
       Example:
       ```
-      make program TARGET=CY8CKIT-041S-MAX TOOLCHAIN=GCC_ARM
+      make program TOOLCHAIN=GCC_ARM
       ```
    </details>
 
-3. Touch any of the CAPSENSE&trade; buttons with your finger. LEDs turn ON indicating the activation of buttons in the following pattern:
-
-   - LED2 turns ON when Button0 is touched.
-   - LED3 turns ON when Button1 is touched.
+3. Touch any of the CAPSENSE&trade; buttons with your finger. Corresponding LEDs turn ON indicating the activation of buttons.
 
 4. Use a water dropper to place water droplets on top of the buttons. Observe that all LEDs are in OFF state indicating that no false trigger occurs due to the presence of water.
 
@@ -183,7 +191,7 @@ For a list of supported IDEs and more details, see the "Exporting to IDEs" secti
 
         You can also run the CAPSENSE&trade; Tuner application standalone from the *{ModusToolbox&trade; install directory}/ModusToolbox/tools_{version}/capsense-configurator/capsense-tuner*. In this case, after opening the application, select **File** > **Open** and open the *design.cycapsense* file of the respective application, which is present in the *{Application root directory}/bsps/TARGET_\<BSP-NAME>/config* folder.
 
-	     See the [ModusToolbox&trade; user guide](https://www.infineon.com/ModusToolboxUserGuide) (locally available at *{ModusToolbox&trade; install directory}/docs_{version}/mtb_user_guide.pdf*)for options to open the CAPSENSE&trade; tuner application using the CLI.
+	    See the [ModusToolbox&trade; user guide](https://www.infineon.com/ModusToolboxUserGuide) (locally available at *{ModusToolbox&trade; install directory}/docs_{version}/mtb_user_guide.pdf*)for options to open the CAPSENSE&trade; tuner application using the CLI.
 
     2. Ensure the kit is in CMSIS-DAP bulk mode (KitProg3 Status LED is ON and not blinking). See [Firmware-loader](https://github.com/Infineon/Firmware-loader) to learn on how to update the firmware and switch modes in KitProg3.
 
@@ -207,17 +215,17 @@ For a list of supported IDEs and more details, see the "Exporting to IDEs" secti
 
     5. Click **Start** or select **Communication** > **Start** to start data streaming from the device.
 
-         **Figure 3. Start tuner communication**
+        **Figure 3. Start tuner communication**
 
-         ![](images/figure3.png)
+        ![](images/figure3.png)
 
-         The *Widget/Sensor parameters* tab gets updated with the parameters configured in the *CAPSENSE&trade; Configurator* window. The tuner displays the data from the sensor in the **Widget View** and **Graph View** tabs.
+        The *Widget/Sensor parameters* tab gets updated with the parameters configured in the *CAPSENSE&trade; Configurator* window. The tuner displays the data from the sensor in the **Widget View** and **Graph View** tabs.
 
     6.  Set the **Read mode** to Synchronized mode. Navigate to the **Widget View** tab; you can see the **Button0** widget highlighted in blue color when you touch it.
 
-         **Figure 4. Widget View tab of CAPSENSE&trade; Tuner**
+        **Figure 4. Widget View tab of CAPSENSE&trade; Tuner**
 
-         ![](images/figure4.png)
+        ![](images/figure4.png)
 
     7. You can view the raw count, baseline, difference count and status for each sensor in the **Graph View** tab. For example, to view the sensor data for Button 1, select **Button1_Rx0** under **Button1**.
 
@@ -235,19 +243,32 @@ For a list of supported IDEs and more details, see the "Exporting to IDEs" secti
 
    10. Once the noise is acquired, place the metal finger at a position on the button and then click **Acquire Signal**. Ensure that the metal finger remains on the button as long as the signal acquisition is in progress. Observe the SNR is above 5:1.
 
-         The calculated SNR on this button is displayed, as Figure 7 shows. Based on your end system design, test the signal with a finger that matches the size of your normal use case. Typically, finger size targets are ~8 to 9 mm. Consider testing with smaller sizes that should be rejected by the system to ensure that they do not reach the finger threshold.
+        The calculated SNR on this button is displayed, as Figure 7 shows. Based on your end system design, test the signal with a finger that matches the size of your normal use case. Typically, finger size targets are ~8 to 9 mm. Consider testing with smaller sizes that should be rejected by the system to ensure that they do not reach the finger threshold.
 
-         **Figure 7. CAPSENSE&trade; Tuner - SNR Measurement: Acquire Signal**
+        **Figure 7. CAPSENSE&trade; Tuner - SNR Measurement: Acquire Signal**
 
-         ![](images/figure7.png)
+        ![](images/figure7.png)
 
 ## Debugging
 
-You can debug the example to step through the code. In the IDE, use the **\<Application Name> Debug (KitProg3_MiniProg4)** configuration in the **Quick Panel**. For details, see the "Program and debug" section in the [Eclipse IDE for ModusToolbox&trade; user guide](https://www.infineon.com/MTBEclipseIDEUserGuide).
+You can debug the example to step through the code.
+
+<details><summary><b>In Eclipse IDE</b></summary>
+
+Use the **\<Application Name> Debug (KitProg3_MiniProg4)** configuration in the **Quick Panel**. For details, see the "Program and debug" section in the [Eclipse IDE for ModusToolbox&trade; user guide](https://www.infineon.com/MTBEclipseIDEUserGuide).
+
+</details>
+
+<details><summary><b>In other IDEs</b></summary>
+
+Follow the instructions in your preferred IDE.
+
+</details>
 
 ## Design and implementation
 
-The project contains two button widgets configured in CSX-RM sensing mode. In the default setting, all inactive sensors of the buttons are connected to the shield when a sensor is scanned. In this code example, callback to the CAPSENSE&trade; middleware is registered using the `Cy_CapSense_RegisterCallback` function. To achieve liquid tolerance, the Rx electrode of the sensor with the CSD sense method should be scanned. While scanning the Rx electrode as a CSD sensor, ensure that the shield electrode is enabled, and connect the Tx pin of the mutual-capacitance sensor to the driven shield signal. The low-level `CapSense_SetPinState()` API function is used to connect the Tx pin of the mutual-capacitance sensor to the shield electrode.
+The project contains button widgets configured in CSX-RM sensing mode. In the default setting, all inactive sensors of the buttons are connected to the shield when a sensor is scanned. In this code example, callback to the CAPSENSE&trade; middleware is registered using the `Cy_CapSense_RegisterCallback` function. To achieve liquid tolerance, the Rx electrode of the sensor with the CSD sense method should be scanned. While scanning the Rx electrode as a CSD sensor, ensure that the shield electrode is enabled, and connect the Tx pin of the mutual-capacitance sensor to the driven shield signal. The low-level `CapSense_SetPinState()` API function is used to connect the Tx pin of the mutual-capacitance sensor to the shield electrode.
+> **Note:**  Use the low-level `Cy_CapSense_SlotPinState()` API to connect the mutual-capacitance sensor's Tx pin to the shield electrode for fifth-generation low-power CAPSENSE&trade;.
 
 The project uses the [CAPSENSE&trade; middleware](https://github.com/Infineon/capsense) (see ModusToolbox&trade; user guide for more details on selecting a middleware). See [AN85951 – PSoC&trade; 4 and PSoC&trade; 6 MCU CAPSENSE&trade; design guide](https://www.infineon.com/AN85951) for more details on CAPSENSE&trade; features and usage.
 
@@ -267,7 +288,7 @@ The following ModusToolbox&trade; resources are used in this example:
 
  Resource  |  Alias/object     |    Purpose     |
  :------- | :------------    | :------------ |
- CAPSENSE&trade; | CYBSP_MSC0,CYBSP_MSC1 | CAPSENSE&trade; driver to interact with the MSC hardware and interface the CAPSENSE&trade; sensors
+ CAPSENSE&trade; | CYBSP_CapSense | CAPSENSE&trade; driver to interact with the CSX hardware and interface the CAPSENSE&trade; sensors
  SCB |  EZI2C | EZI2C driver to interface with CAPSENSE™ tuner
  LED (BSP) | CYBSP_USER_LED | User LED to show the output
 
@@ -301,11 +322,12 @@ Infineon provides a wealth of data at www.infineon.com to help you select the ri
 
 ## Document history
 
-Document title: *CE237675* – *PSoC&trade; 4: MSC CAPSENSE&trade; liquid-tolerant hybrid scan*
+Document title: *CE237675* – *PSoC&trade; 4: CAPSENSE&trade; liquid-tolerant hybrid scan*
 
  Version | Description of change
  ------- | ---------------------
  1.0.0   | New code example.
+ 1.1.0   | Added support for new BSPs
 
 <br>
 
